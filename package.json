@@ -7,5 +7,9 @@
   },
   "author": "Elena Kikiova",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "express": "^5.2.1"
+  }
 }

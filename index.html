@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+	</head>
+	<body>
+		<h1>Moodboard Generator</h1>
+		<button id="generateBtn">Generate Moodboard</button>
+		<div id="loader" style="display: none">Generating moodboard…</div>
+
+		<img id="resultImg" style="display: none; max-width: 100%" />
+
+		<script>
+			const generateBtn = document.getElementById("generateBtn");
+			const resultImg = document.getElementById("resultImg");
+
+			generateBtn.addEventListener("click", async () => {
+				const response = await fetch("http://localhost:8080/generate-moodboard", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						theme: "spring, greenery, flowers, dew",
+						style: "soft painterly style, bright",
+						color: "#960018, yellow",
+					}),
+				});
+
+				const data = await response.json();
+				const imageName = "moodboard_" + data.image_id + ".png";
+
+				// Node вече връща директния path до SaveImage PNG
+				resultImg.src = imageName;
+				resultImg.onload = () => {
+					loader.style.display = "none";
+					resultImg.style.display = "block";
+				};
+			});
+		</script>
+	</body>
+</html>
