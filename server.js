@@ -33,7 +33,7 @@ app.post("/generate-moodboard", async (req, res) => {
 	let clientId = crypto.randomUUID();
 
 	const fileName = `moodboard_${clientId}`;
-	console.log(fileName);
+	console.log(theme, style, color);
 
 	prompt["11"].inputs.value = theme;
 	prompt["12"].inputs.value = style;
