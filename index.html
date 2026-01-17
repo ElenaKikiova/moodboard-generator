@@ -15,6 +15,23 @@
 			const generateBtn = document.getElementById("generateBtn");
 			const resultImg = document.getElementById("resultImg");
 
+			const loadImage = (imageUrl, refetch) => {
+				setTimeout(() => {
+					resultImg.src = imageUrl;
+					refetch++;
+					resultImg.onload = () => {
+						loader.style.display = "none";
+						resultImg.style.display = "block";
+					};
+					resultImg.onerror = () => {
+						if (refetch < 20) {
+							console.log("refetch", refetch);
+							loadImage(imageUrl, refetch);
+						}
+					};
+				}, 1500 * refetch);
+			};
+
 			generateBtn.addEventListener("click", async () => {
 				const response = await fetch("http://localhost:8080/generate-moodboard", {
 					method: "POST",
@@ -24,19 +41,14 @@
 					body: JSON.stringify({
 						theme: "spring, greenery, flowers, dew",
 						style: "soft painterly style, bright",
-						color: "#960018, yellow",
+						color: "carmine, yellow",
 					}),
 				});
 
 				const data = await response.json();
-				const imageName = "moodboard_" + data.image_id + ".png";
+				const imageUrl = data.image_url;
 
-				// Node вече връща директния path до SaveImage PNG
-				resultImg.src = imageName;
-				resultImg.onload = () => {
-					loader.style.display = "none";
-					resultImg.style.display = "block";
-				};
+				loadImage(imageUrl, 0);
 			});
 		</script>
 	</body>
