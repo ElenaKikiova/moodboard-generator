@@ -4,7 +4,7 @@ const path = require("path");
 const crypto = require("crypto");
 
 const app = express();
-const PORT = 8080;
+const PORT = 8081;
 
 const comfyAPI = "http://127.0.0.1:8000";
 
@@ -24,6 +24,10 @@ async function buildPrompt() {
 	const data = await fs.readFile(workflowPath, "utf-8");
 	return JSON.parse(data);
 }
+
+app.get("/", async (req, res) => {
+	res.status(200).send("Moodboard Generator API is running.");
+});
 
 app.post("/generate-moodboard", async (req, res) => {
 	const { theme, style, color } = req.body;

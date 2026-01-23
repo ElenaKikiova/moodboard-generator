@@ -152,7 +152,7 @@
 				resultImg.style.display = "none";
 
 				try {
-					const response = await fetch("http://localhost:8080/generate-moodboard", {
+					const response = await fetch("http://localhost:8081/generate-moodboard", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({ theme, style, color }),
